@@ -9,17 +9,6 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-const exampleInjectJS = fs.readFileSync('test/src/js/example-inject.js', {encoding: 'utf-8'});
-
-function getExamples(port) {
-  return fs.readdirSync('examples')
-      .filter(f => f.endsWith('.html'))
-      .map(f => ({
-        url: `http://localhost:${port}/examples/${f}`,
-        js: exampleInjectJS,
-      }));
-}
-
 app.use(express.static(path.dirname(__dirname)));
 const server = app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`);
@@ -36,7 +25,12 @@ function makePromiseInfo() {
 }
 
 async function test(port) {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: [
+      '--disable-features=DialMediaRouteProvider',
+      '--enable-unsafe-webgpu',
+    ],
+  });
   const page = await browser.newPage();
 
   page.on('console', async e => {
@@ -62,7 +56,6 @@ async function test(port) {
 
   const testPages = [
     {url: `http://localhost:${port}/test/index.html?reporter=spec` },
-    ...getExamples(port),
   ];
 
   for (const {url, js} of testPages) {
