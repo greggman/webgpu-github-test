@@ -1,0 +1,25 @@
+{
+  "name": "webgpu-github-test",
+  "version": "1.0.0",
+  "description": "testing testing webgpu on github actions",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/puppeteer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greggman/webgpu-github-test.git"
+  },
+  "keywords": [
+    "webgpu"
+  ],
+  "author": "Gregg Tavares",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/greggman/webgpu-github-test/issues"
+  },
+  "homepage": "https://github.com/greggman/webgpu-github-test#readme",
+  "devDependencies": {
+    "puppeteer": "^19.4.1"
+  }
+}
